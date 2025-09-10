@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --rosewater: #f4dbd6;
+            --flamingo: #f0c6c6;
+            --pink: #f5bde6;
+            --mauve: #c6a0f6;
+            --red: #ed8796;
+            --maroon: #ee99a0;
+            --peach: #f5a97f;
+            --yellow: #eed49f;
+            --green: #a6da95;
+            --teal: #8bd5ca;
+            --sky: #91d7e3;
+            --sapphire: #7dc4e4;
+            --blue: #8aadf4;
+            --lavender: #b7bdf8;
+            --text: #cad3f5;
+            --subtext1: #b8c0e0;
+            --subtext0: #a5adcb;
+            --overlay2: #939ab7;
+            --overlay1: #8087a2;
+            --overlay0: #6e738d;
+            --surface2: #5b6078;
+            --surface1: #494d64;
+            --surface0: #363a4f;
+            --base: #24273a;
+            --mantle: #1e2030;
+            --crust: #181926;
+            --mocha: #8b7765;
+            --cappuccino: #a67c5a;
+            --checker-dark: #11111b;
+            --checker-light: #181825;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: 
+                repeating-conic-gradient(
+                    var(--checker-dark) 0deg 90deg,
+                    var(--checker-light) 90deg 180deg,
+                    var(--checker-dark) 180deg 270deg,
+                    var(--checker-light) 270deg 360deg
+                );
+            background-size: 80px 80px;
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            animation: checkerboardScroll 20s linear infinite;
+        }
+
+        @keyframes checkerboardScroll {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: -80px 80px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--mauve);
+            color: var(--base);
+            text-align: center;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 20px rgba(198, 160, 246, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            animation: fadeInDown 0.8s ease-out 0.1s both;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            z-index: 10;
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .frame-container {
+            position: relative;
+            width: 900px;
+            height: 600px;
+            background: var(--surface0);
+            border: 1px solid var(--surface2);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 8px 32px rgba(24, 25, 38, 0.4),
+                inset 0 1px 0 rgba(202, 211, 245, 0.1);
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .frame-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--surface1);
+            border-bottom: 1px solid var(--surface2);
+        }
+
+        .traffic-lights {
+            display: flex;
+            gap: 8px;
+        }
+
+        .traffic-light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .traffic-light.close { background: var(--red); }
+        .traffic-light.minimize { background: var(--yellow); }
+        .traffic-light.maximize { background: var(--green); }
+
+        .frame-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--subtext1);
+        }
+
+        iframe {
+            width: 100%;
+            height: calc(100% - 49px);
+            border: none;
+            background: var(--base);
+        }
+
+        .url-container {
+            display: none;
+            width: 900px;
+            background: var(--surface0);
+            border: 1px solid var(--surface2);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 8px 32px rgba(24, 25, 38, 0.4),
+                inset 0 1px 0 rgba(202, 211, 245, 0.1);
+        }
+
+        .url-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--surface1);
+            border-bottom: 1px solid var(--surface2);
+        }
+
+        .url-prefix {
+            color: var(--overlay2);
+            font-size: 14px;
+            font-weight: 500;
+            margin-right: 4px;
+        }
+
+        #urlInput {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            flex: 1;
+            font-family: inherit;
+        }
+
+        #urlInput::placeholder {
+            color: var(--overlay1);
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: slideInLeft 1s ease-out 0.7s both;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            background: var(--surface1);
+            border: 1px solid var(--surface2);
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(202, 211, 245, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: var(--surface2);
+            border-color: var(--overlay0);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(24, 25, 38, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(24, 25, 38, 0.3);
+        }
+
+        .btn.primary {
+            background: var(--mauve);
+            border-color: var(--mauve);
+            color: var(--base);
+        }
+
+        .btn.primary:hover {
+            background: var(--lavender);
+            border-color: var(--lavender);
+        }
+
+        .btn.secondary {
+            background: var(--teal);
+            border-color: var(--teal);
+            color: var(--base);
+        }
+
+        .btn.secondary:hover {
+            background: var(--sky);
+            border-color: var(--sky);
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--subtext0);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .keyboard-hint {
+            font-size: 11px;
+            color: var(--overlay1);
+            margin-left: auto;
+            padding: 2px 6px;
+            background: var(--surface0);
+            border: 1px solid var(--surface2);
+        }
+
+        @media (max-width: 1200px) {
+            .frame-container,
+            .url-container {
+                width: 90vw;
+                max-width: 1100px;
+            }
+            
+            .controls {
+                position: relative;
+                bottom: auto;
+                right: auto;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-top: 16px;
+            }
+            
+            .btn {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner" id="bannerText">loading...</div>
+
+    <div class="main-container">
+        <div class="frame-container" id="frameContainer">
+            <div class="frame-header">
+                <div class="traffic-lights">
+                    <div class="traffic-light close"></div>
+                    <div class="traffic-light minimize"></div>
+                    <div class="traffic-light maximize"></div>
+                </div>
+                <div class="frame-title">Discord</div>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    connected
+                </div>
+            </div>
+            <iframe id="embedFrame"
+                src="https://e.widgetbot.io/channels/1348789729667321949/1348789730678018143"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+                referrerpolicy="no-referrer">
+            </iframe>
+        </div>
+
+        <div class="url-container" id="urlBox">
+            <div class="url-header">
+                <span class="url-prefix">https://</span>
+                <input type="text" id="urlInput" placeholder="example.com" onkeypress="handleKeyPress(event)">
+                <div class="keyboard-hint">Enter</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="toggleFullscreen()">Fullscreen</button>
+            <button class="btn primary" onclick="toggleIframe()">Toggle Embed</button>
+            <button class="btn secondary" onclick="loadDiscord()" id="discordBtn" style="display: none;">Back to Discord</button>
+        </div>
+    </div>
+
+    <script>
+        let showingDiscord = true;
+        const discordURL = "https://e.widgetbot.io/channels/1348789729667321949/1348789730678018143";
+
+        function updateBannerText() {
+            fetch("https://raw.githubusercontent.com/bitly-cadecraft/cadecraft-nitrogen/refs/heads/main/banner")
+                .then(response => response.text())
+                .then(text => {
+                    if (text.includes("$.hide-banner.$")) {
+                        document.querySelector('.banner').style.display = 'none';
+                    } else {
+                        document.getElementById('bannerText').innerText = text;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('bannerText').innerText = "banner failed to load, is your internet on?";
+                });
+        }
+
+        setInterval(updateBannerText, 25000);
+        updateBannerText();
+
+        function toggleFullscreen() {
+            let iframe = document.getElementById("embedFrame");
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.mozRequestFullScreen) {
+                iframe.mozRequestFullScreen();
+            } else if (iframe.webkitRequestFullscreen) {
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) {
+                iframe.msRequestFullscreen();
+            }
+        }
+
+        function toggleIframe() {
+            let frameContainer = document.getElementById("frameContainer");
+            let inputBox = document.getElementById("urlBox");
+            let input = document.getElementById("urlInput");
+            let frameTitle = document.querySelector(".frame-title");
+
+            if (showingDiscord) {
+                frameContainer.style.display = "none";
+                inputBox.style.display = "block";
+                input.value = "";
+                input.focus();
+            } else {
+                frameContainer.style.display = "block";
+                inputBox.style.display = "none";
+                document.getElementById("embedFrame").src = discordURL;
+                frameTitle.textContent = "Discord";
+                document.getElementById("discordBtn").style.display = "none";
+            }
+            showingDiscord = !showingDiscord;
+        }
+
+        function loadDiscord() {
+            let frameContainer = document.getElementById("frameContainer");
+            let inputBox = document.getElementById("urlBox");
+            let frameTitle = document.querySelector(".frame-title");
+            
+            document.getElementById("embedFrame").src = discordURL;
+            frameContainer.style.display = "block";
+            inputBox.style.display = "none";
+            frameTitle.textContent = "Discord";
+            document.getElementById("discordBtn").style.display = "none";
+            showingDiscord = true;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                let url = document.getElementById("urlInput").value.trim();
+                if (url) {
+                    let iframe = document.getElementById("embedFrame");
+                    let frameContainer = document.getElementById("frameContainer");
+                    let frameTitle = document.querySelector(".frame-title");
+                    
+                    iframe.src = `https://${url}`;
+                    frameContainer.style.display = "block";
+                    document.getElementById("urlBox").style.display = "none";
+                    frameTitle.textContent = url;
+                    document.getElementById("discordBtn").style.display = "inline-block";
+                    showingDiscord = false;
+                }
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && !showingDiscord) {
+                toggleIframe();
+            }
+        });
+    </script>
+</body>
+</html>
