@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clever | Portal</title>
-    <link rel="shortcut icon" href="http://assets.clever.com/oauth/a3f2eb13e3883105ca0542aee1151ae8a00b2311/favicon.ico">
+    <link rel="shortcut icon" href="http://assets.clever.com/oauth/a3f2eb13e3883105ca0542aee1151ae8a00b2311/favicon.ico" id="favicon">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -127,6 +127,29 @@
             z-index: 1000;
             opacity: 0;
             animation: fadeInDown 0.8s ease-out 0.1s both;
+            transition: all 0.3s ease;
+        }
+
+        .banner.hidden {
+            display: none;
+        }
+
+        .banner.small {
+            padding: 4px 12px;
+            font-size: 11px;
+        }
+
+        .disclaimer {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 11px;
+            color: var(--overlay2);
+            background: var(--surface0);
+            padding: 6px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--surface2);
+            z-index: 100;
         }
 
         .main-container {
@@ -339,6 +362,258 @@
             border: 1px solid var(--surface2);
         }
 
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal {
+            background: var(--surface0);
+            border: 1px solid var(--surface2);
+            border-radius: 8px;
+            width: 600px;
+            max-height: 80vh;
+            overflow: hidden;
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            background: var(--surface1);
+            border-bottom: 1px solid var(--surface2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--overlay2);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: var(--red);
+        }
+
+        .modal-content {
+            max-height: calc(80vh - 140px);
+            overflow-y: auto;
+        }
+
+        .tabs {
+            display: flex;
+            background: var(--surface1);
+            border-bottom: 1px solid var(--surface2);
+        }
+
+        .tab {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--overlay2);
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab:hover {
+            background: var(--surface2);
+            color: var(--text);
+        }
+
+        .tab.active {
+            color: var(--mauve);
+            border-bottom-color: var(--mauve);
+            background: var(--surface0);
+        }
+
+        .tab-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .setting-group {
+            margin-bottom: 20px;
+        }
+
+        .setting-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .dropdown-select {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--surface1);
+            border: 1px solid var(--surface2);
+            border-radius: 4px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 13px;
+            cursor: pointer;
+            appearance: none;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="%23a5adcb" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+        }
+
+        .dropdown-select:focus {
+            outline: none;
+            border-color: var(--mauve);
+            box-shadow: 0 0 0 2px rgba(198, 160, 246, 0.2);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--surface1);
+            border: 1px solid var(--surface2);
+            border-radius: 4px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--mauve);
+            box-shadow: 0 0 0 2px rgba(198, 160, 246, 0.2);
+        }
+
+        .range-input {
+            width: 100%;
+            margin: 8px 0;
+            appearance: none;
+            height: 4px;
+            background: var(--surface2);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--mauve);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .range-input::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--mauve);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .range-value {
+            text-align: center;
+            font-size: 12px;
+            color: var(--overlay2);
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+        }
+
+        .checkbox {
+            width: 16px;
+            height: 16px;
+            background: var(--surface1);
+            border: 1px solid var(--surface2);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+            appearance: none;
+        }
+
+        .checkbox:checked {
+            background: var(--mauve);
+            border-color: var(--mauve);
+        }
+
+        .checkbox:checked::after {
+            content: 'âœ"';
+            position: absolute;
+            top: -2px;
+            left: 2px;
+            color: var(--base);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .preset-controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .preset-controls input {
+            flex: 1;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 11px;
+            text-transform: none;
+        }
+
+        .default-site-group {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .default-site-select {
+            flex: 1;
+        }
+
+        .custom-url-input {
+            flex: 1;
+            display: none;
+        }
+
         @media (max-width: 1200px) {
             .frame-container,
             .url-container {
@@ -360,11 +635,20 @@
                 font-size: 11px;
                 padding: 6px 12px;
             }
+
+            .modal {
+                width: 90vw;
+                max-width: 600px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="banner" id="bannerText">loading...</div>
+
+    <div class="disclaimer">
+        HTMLs are hidden from GoGuardian, you can use this all you want.
+    </div>
 
     <div class="main-container">
         <div class="frame-container" id="frameContainer">
@@ -398,13 +682,139 @@
         <div class="controls">
             <button class="btn" onclick="toggleFullscreen()">Fullscreen</button>
             <button class="btn primary" onclick="toggleIframe()">Toggle Embed</button>
-            <button class="btn secondary" onclick="loadDiscord()" id="discordBtn" style="display: none;">Back to Discord</button>
+            <button class="btn secondary" onclick="loadDefault()" id="defaultBtn" style="display: none;">Back to Default</button>
+            <button class="btn" onclick="openSettings()">Settings</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">Settings</div>
+                <button class="close-btn" onclick="closeSettings()">&times;</button>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('goguardian')">GoGuardian Spoofer</div>
+                <div class="tab" onclick="switchTab('misc')">Misc</div>
+                <div class="tab" onclick="switchTab('presets')">Presets</div>
+            </div>
+
+            <div class="modal-content">
+                <div id="goguardian-tab" class="tab-content active">
+                    <div class="setting-group">
+                        <label class="setting-label">Favicon Disguiser</label>
+                        <select class="dropdown-select" id="disguiseSelect" onchange="setDisguise(this.value)">
+                            <option value="clever">Clever | Portal (default)</option>
+                            <option value="drive">Google Drive</option>
+                            <option value="campus">InfCampus</option>
+                            <option value="iready">iReady</option>
+                            <option value="illuminate">Illuminate</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label class="setting-label">GoGuardian URL Spoofer</label>
+                        <input type="text" class="input-field" id="ggUrlInput" placeholder="Enter URL (e.g., google.com)">
+                        <button class="btn btn-small" onclick="openGoGuardianTab()" style="margin-top: 8px;">Open Tab</button>
+                        <p style="font-size: 11px; color: var(--overlay1); margin-top: 8px;">Opens URL in new tab, then closes after 5 seconds</p>
+                    </div>
+                </div>
+
+                <div id="misc-tab" class="tab-content">
+                    <div class="setting-group">
+                        <label class="setting-label">Default Site</label>
+                        <div class="default-site-group">
+                            <select class="dropdown-select default-site-select" id="defaultSiteSelect" onchange="handleDefaultSiteChange(this.value)">
+                                <option value="discord">Discord (Default)</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                            <input type="text" class="input-field custom-url-input" id="customDefaultUrl" placeholder="Enter custom URL">
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <label class="setting-label">Tile Animation Speed</label>
+                        <input type="range" class="range-input" id="speedSlider" min="0.5" max="64" step="0.5" value="20" oninput="updateAnimationSpeed(this.value)">
+                        <div class="range-value" id="speedValue">20s</div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label class="setting-label">Banner Options</label>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" class="checkbox" id="bannerToggle" checked onchange="toggleBanner()">
+                            <label for="bannerToggle">Show Banner</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" class="checkbox" id="bannerSizeToggle" onchange="toggleBannerSize()">
+                            <label for="bannerSizeToggle">Small Banner</label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <label class="setting-label">Iframe Width (px)</label>
+                        <input type="range" class="range-input" id="widthSlider" min="600" max="1400" value="900" oninput="updateIframeWidth(this.value)">
+                        <div class="range-value" id="widthValue">900px</div>
+                    </div>
+                </div>
+
+                <div id="presets-tab" class="tab-content">
+                    <div class="setting-group">
+                        <label class="setting-label">Save Current Settings</label>
+                        <div class="preset-controls">
+                            <input type="text" class="input-field" id="presetName" placeholder="Preset name">
+                            <button class="btn btn-small" onclick="savePreset()">Save</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <label class="setting-label">Load Preset</label>
+                        <select class="dropdown-select" id="presetSelect" onchange="loadPreset(this.value)">
+                            <option value="">Select preset...</option>
+                        </select>
+                        <button class="btn btn-small" onclick="deletePreset()" style="margin-top: 8px;">Delete Selected</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        let showingDiscord = true;
+        let showingDefault = true;
+        let currentDisguise = 'clever';
+        let settings = {
+            disguise: 'clever',
+            animationSpeed: 20,
+            bannerVisible: true,
+            bannerSmall: false,
+            iframeWidth: 900,
+            defaultSite: 'discord',
+            customDefaultUrl: ''
+        };
         const discordURL = "https://e.widgetbot.io/channels/1348789729667321949/1348789730678018143";
+
+        const disguises = {
+            clever: {
+                title: "Clever | Portal",
+                favicon: "http://assets.clever.com/oauth/a3f2eb13e3883105ca0542aee1151ae8a00b2311/favicon.ico"
+            },
+            drive: {
+                title: "Home - Google Drive",
+                favicon: "https://drive.google.com/drive/favicon.ico"
+            },
+            campus: {
+                title: "Student Profile | Home | Infinite Campus",
+                favicon: "https://campus.clarke.k12.ga.us/favicon.ico"
+            },
+            iready: {
+                title: "Math Home Page, i-Ready",
+                favicon: "https://login.i-ready.com/favicon.ico"
+            },
+            illuminate: {
+                title: "Quick Access Login | Authentication | Renaissance DnA Online Testing",
+                favicon: "https://testing.illuminateed.com/favicon.svg"
+            }
+        };
 
         function updateBannerText() {
             fetch("https://raw.githubusercontent.com/bitly-cadecraft/cadecraft-nitrogen/refs/heads/main/banner")
@@ -423,6 +833,7 @@
 
         setInterval(updateBannerText, 25000);
         updateBannerText();
+        loadPresetList();
 
         function toggleFullscreen() {
             let iframe = document.getElementById("embedFrame");
@@ -437,13 +848,27 @@
             }
         }
 
+        function getDefaultURL() {
+            if (settings.defaultSite === 'custom' && settings.customDefaultUrl) {
+                return settings.customDefaultUrl.startsWith('http') ? settings.customDefaultUrl : `https://${settings.customDefaultUrl}`;
+            }
+            return discordURL;
+        }
+
+        function getDefaultTitle() {
+            if (settings.defaultSite === 'custom' && settings.customDefaultUrl) {
+                return settings.customDefaultUrl;
+            }
+            return "Discord";
+        }
+
         function toggleIframe() {
             let frameContainer = document.getElementById("frameContainer");
             let inputBox = document.getElementById("urlBox");
             let input = document.getElementById("urlInput");
             let frameTitle = document.querySelector(".frame-title");
 
-            if (showingDiscord) {
+            if (showingDefault) {
                 frameContainer.style.display = "none";
                 inputBox.style.display = "block";
                 input.value = "";
@@ -451,24 +876,24 @@
             } else {
                 frameContainer.style.display = "block";
                 inputBox.style.display = "none";
-                document.getElementById("embedFrame").src = discordURL;
-                frameTitle.textContent = "Discord";
-                document.getElementById("discordBtn").style.display = "none";
+                document.getElementById("embedFrame").src = getDefaultURL();
+                frameTitle.textContent = getDefaultTitle();
+                document.getElementById("defaultBtn").style.display = "none";
             }
-            showingDiscord = !showingDiscord;
+            showingDefault = !showingDefault;
         }
 
-        function loadDiscord() {
+        function loadDefault() {
             let frameContainer = document.getElementById("frameContainer");
             let inputBox = document.getElementById("urlBox");
             let frameTitle = document.querySelector(".frame-title");
             
-            document.getElementById("embedFrame").src = discordURL;
+            document.getElementById("embedFrame").src = getDefaultURL();
             frameContainer.style.display = "block";
             inputBox.style.display = "none";
-            frameTitle.textContent = "Discord";
-            document.getElementById("discordBtn").style.display = "none";
-            showingDiscord = true;
+            frameTitle.textContent = getDefaultTitle();
+            document.getElementById("defaultBtn").style.display = "none";
+            showingDefault = true;
         }
 
         function handleKeyPress(event) {
@@ -483,17 +908,205 @@
                     frameContainer.style.display = "block";
                     document.getElementById("urlBox").style.display = "none";
                     frameTitle.textContent = url;
-                    document.getElementById("discordBtn").style.display = "inline-block";
-                    showingDiscord = false;
+                    document.getElementById("defaultBtn").style.display = "inline-block";
+                    showingDefault = false;
                 }
             }
         }
 
+        function openSettings() {
+            document.getElementById("settingsModal").style.display = "flex";
+        }
+
+        function closeSettings() {
+            document.getElementById("settingsModal").style.display = "none";
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+
+        function setDisguise(type) {
+            currentDisguise = type;
+            settings.disguise = type;
+            const disguise = disguises[type];
+            
+            document.title = disguise.title;
+            document.getElementById("favicon").href = disguise.favicon;
+        }
+
+        function openGoGuardianTab() {
+            const url = document.getElementById("ggUrlInput").value.trim();
+            if (url) {
+                const fullUrl = url.startsWith('http') ? url : `https://${url}`;
+                const newTab = window.open(fullUrl, '_blank');
+                
+                setTimeout(() => {
+                    if (newTab && !newTab.closed) {
+                        newTab.close();
+                    }
+                }, 5000);
+                
+                document.getElementById("ggUrlInput").value = "";
+            }
+        }
+
+        function handleDefaultSiteChange(value) {
+            settings.defaultSite = value;
+            const customInput = document.querySelector('.custom-url-input');
+            
+            if (value === 'custom') {
+                customInput.style.display = 'block';
+            } else {
+                customInput.style.display = 'none';
+                settings.customDefaultUrl = '';
+            }
+        }
+
+        function updateAnimationSpeed(value) {
+            settings.animationSpeed = parseFloat(value);
+            document.documentElement.style.setProperty('--animation-duration', `${value}s`);
+            document.body.style.animationDuration = `${value}s`;
+            document.getElementById("speedValue").textContent = `${value}s`;
+        }
+
+        function toggleBanner() {
+            const banner = document.querySelector('.banner');
+            const isChecked = document.getElementById("bannerToggle").checked;
+            settings.bannerVisible = isChecked;
+            
+            if (isChecked) {
+                banner.classList.remove('hidden');
+            } else {
+                banner.classList.add('hidden');
+            }
+        }
+
+        function toggleBannerSize() {
+            const banner = document.querySelector('.banner');
+            const isChecked = document.getElementById("bannerSizeToggle").checked;
+            settings.bannerSmall = isChecked;
+            
+            if (isChecked) {
+                banner.classList.add('small');
+            } else {
+                banner.classList.remove('small');
+            }
+        }
+
+        function updateIframeWidth(value) {
+            settings.iframeWidth = parseInt(value);
+            document.getElementById("frameContainer").style.width = `${value}px`;
+            document.getElementById("urlBox").style.width = `${value}px`;
+            document.getElementById("widthValue").textContent = `${value}px`;
+        }
+
+        function savePreset() {
+            const name = document.getElementById("presetName").value.trim();
+            if (!name) {
+                alert("Please enter a preset name");
+                return;
+            }
+            
+            settings.customDefaultUrl = document.getElementById("customDefaultUrl").value.trim();
+            
+            const presets = JSON.parse(localStorage.getItem('portalPresets') || '{}');
+            presets[name] = { ...settings };
+            localStorage.setItem('portalPresets', JSON.stringify(presets));
+            
+            document.getElementById("presetName").value = "";
+            loadPresetList();
+            alert(`Preset "${name}" saved successfully!`);
+        }
+
+        function loadPresetList() {
+            const presets = JSON.parse(localStorage.getItem('portalPresets') || '{}');
+            const select = document.getElementById("presetSelect");
+            
+            select.innerHTML = '<option value="">Select preset...</option>';
+            
+            Object.keys(presets).forEach(name => {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                select.appendChild(option);
+            });
+        }
+
+        function loadPreset(name) {
+            if (!name) return;
+            
+            const presets = JSON.parse(localStorage.getItem('portalPresets') || '{}');
+            if (!presets[name]) return;
+            
+            const preset = presets[name];
+            settings = { ...preset };
+            
+            document.getElementById("disguiseSelect").value = preset.disguise;
+            setDisguise(preset.disguise);
+            
+            document.getElementById("speedSlider").value = preset.animationSpeed;
+            updateAnimationSpeed(preset.animationSpeed);
+            
+            document.getElementById("bannerToggle").checked = preset.bannerVisible;
+            toggleBanner();
+            
+            document.getElementById("bannerSizeToggle").checked = preset.bannerSmall || false;
+            toggleBannerSize();
+            
+            document.getElementById("widthSlider").value = preset.iframeWidth;
+            updateIframeWidth(preset.iframeWidth);
+            
+            document.getElementById("defaultSiteSelect").value = preset.defaultSite || 'discord';
+            handleDefaultSiteChange(preset.defaultSite || 'discord');
+            
+            if (preset.customDefaultUrl) {
+                document.getElementById("customDefaultUrl").value = preset.customDefaultUrl;
+            }
+        }
+
+        function deletePreset() {
+            const name = document.getElementById("presetSelect").value;
+            if (!name) {
+                alert("Please select a preset to delete");
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to delete preset "${name}"?`)) {
+                const presets = JSON.parse(localStorage.getItem('portalPresets') || '{}');
+                delete presets[name];
+                localStorage.setItem('portalPresets', JSON.stringify(presets));
+                loadPresetList();
+                alert(`Preset "${name}" deleted successfully!`);
+            }
+        }
+
         document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && !showingDiscord) {
+            if (event.key === 'Escape' && !showingDefault) {
                 toggleIframe();
             }
+            if (event.key === 'Escape' && document.getElementById("settingsModal").style.display === 'flex') {
+                closeSettings();
+            }
+            if (event.key === 'Enter' && document.getElementById("ggUrlInput") === document.activeElement) {
+                openGoGuardianTab();
+            }
+        });
+
+        document.getElementById("settingsModal").addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeSettings();
+            }
+        });
+
+        document.getElementById("customDefaultUrl").addEventListener('input', function(event) {
+            settings.customDefaultUrl = event.target.value.trim();
         });
     </script>
 </body>
 </html>
+                
